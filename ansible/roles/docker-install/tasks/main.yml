@@ -1,0 +1,26 @@
+
+- name: Install Docker
+  yum:
+    name: docker
+    state: present
+
+- name: Start Docker
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Enable Docker metrics in daemon.json
+  copy:
+    content: |
+      {
+        "metrics-addr" : "0.0.0.0:9323",
+        "experimental" : true
+      }
+    dest: /etc/docker/daemon.json
+
+- name: Restart Docker to apply metrics config
+  service:
+    name: docker
+    state: restarted
+

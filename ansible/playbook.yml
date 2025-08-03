@@ -1,0 +1,12 @@
+# ansible/playbook.yml
+
+- name: Provision Dockerized Monitoring System
+  hosts: monitoring
+  become: yes
+  roles:
+    - docker-install
+    - microservice
+    - prometheus
+    - grafana
+    - node_exporter
+

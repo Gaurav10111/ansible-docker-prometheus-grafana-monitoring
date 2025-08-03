@@ -1,0 +1,14 @@
+- name: Copy Prometheus build context
+  copy:
+    src: ../dockerfiles/prometheus/
+    dest: /opt/prometheus_build/
+    mode: 0755
+
+- name: Build Prometheus image
+  command: docker build -t custom-prometheus /opt/prometheus_build/
+
+- name: Run Prometheus container
+  command: docker run -d --name prometheus \
+           -v /persistent/prometheus:/opt/prometheus/data \
+           -p 9090:9090 custom-prometheus
+

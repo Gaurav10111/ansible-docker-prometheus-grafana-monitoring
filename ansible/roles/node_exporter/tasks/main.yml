@@ -1,0 +1,13 @@
+- name: Copy Node Exporter build context
+  copy:
+    src: ../dockerfiles/node_exporter/
+    dest: /opt/node_exporter_build/
+    mode: 0755
+
+- name: Build Node Exporter image
+  command: docker build -t custom-node-exporter /opt/node_exporter_build/
+
+- name: Run Node Exporter container
+  command: docker run -d --name node_exporter \
+           -p 9100:9100 custom-node-exporter
+

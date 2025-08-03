@@ -1,0 +1,14 @@
+- name: Copy Grafana build context
+  copy:
+    src: ../dockerfiles/grafana/
+    dest: /opt/grafana_build/
+    mode: 0755
+
+- name: Build Grafana image
+  command: docker build -t custom-grafana /opt/grafana_build/
+
+- name: Run Grafana container
+  command: docker run -d --name grafana \
+           -v /persistent/grafana:/opt/grafana/data \
+           -p 3000:3000 custom-grafana
+

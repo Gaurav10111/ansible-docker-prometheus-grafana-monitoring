@@ -1,0 +1,16 @@
+
+- name: Copy microservice app
+  copy:
+    src: ../dockerfiles/microservice-app/
+    dest: /opt/microservice-app/
+    mode: 0755
+
+- name: Build microservice image
+  command: docker build -t microservice-app /opt/microservice-app/
+
+- name: Run Microservice 1
+  command: docker run -d --name ms1 -p 8000:8000 -p 8001:8001 microservice-app
+
+- name: Run Microservice 2
+  command: docker run -d --name ms2 -p 8002:8000 -p 8003:8001 microservice-app
+
